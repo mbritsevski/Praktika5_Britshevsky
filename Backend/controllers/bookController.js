@@ -18,45 +18,37 @@ exports.createBook = async (req, res) => {
         await book.addAuthor(author);
       }
     }
-
     if (Array.isArray(genre)) {
       for (const name of genre) {
         const [category] = await Category.findOrCreate({ where: { name } });
         await book.addCategory(category);
       }
     }
-
-
     const fullBook = await Book.findByPk(book.id, {
-      include: [Author, Category]
+      include: [Author, Category],
     });
 
     res.status(201).json(fullBook);
   } catch (err) {
-    console.error('Error creating a book', err);
+    console.error("Error creating a book", err);
     res.status(500).json({ message: err.message });
   }
 };
-
 
 // Admin: Kustutab raamatu ID järgi
 exports.deleteBook = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const book = await Book.findByPk(id);
-
   if (!book) return res.status(404).json({ message: "Book not found" });
-
   await book.destroy();
-
   await ActivityLog.create({
     action: `Book "${book.title}" deleted`,
     details: `Book ID: ${book.id}`,
-    userId: req.userId
+    userId: req.userId,
   });
 
   res.status(200).json({ message: "Book deleted" });
 });
-
 
 // All users: tagastab kõik raamatud
 exports.getAllBooks = asyncHandler(async (req, res) => {
@@ -64,7 +56,7 @@ exports.getAllBooks = asyncHandler(async (req, res) => {
     include: [
       { model: Author, through: { attributes: [] } },
       { model: Category, through: { attributes: [] } },
-    ]
+    ],
   });
 
   res.status(200).json({ books });
@@ -79,7 +71,7 @@ exports.updateBook = async (req, res) => {
 
     const book = await Book.findByPk(bookId);
     if (!book) {
-      return res.status(404).json({ message: 'Book not found' });
+      return res.status(404).json({ message: "Book not found" });
     }
 
     await book.update({ title, publicationYear });
@@ -93,7 +85,6 @@ exports.updateBook = async (req, res) => {
       await book.setAuthors(authorInstances);
     }
 
-
     if (Array.isArray(genre)) {
       const categoryInstances = [];
       for (const name of genre) {
@@ -104,26 +95,25 @@ exports.updateBook = async (req, res) => {
     }
 
     const fullBook = await Book.findByPk(bookId, {
-      include: [Author, Category]
+      include: [Author, Category],
     });
 
     res.status(200).json(fullBook);
   } catch (err) {
-    console.error('Error editing a book', err);
+    console.error("Error editing a book", err);
     res.status(500).json({ message: err.message });
   }
 };
-
 
 // All users. tagastab kindlat raamatut
 exports.getOneBook = async (req, res) => {
   try {
     const id = req.params.id;
     const book = await Book.findByPk(id, {
-      include: ['Authors', 'Categories']
+      include: ["Authors", "Categories"],
     });
     if (!book) {
-      return res.status(404).json({ message: 'Book not found' });
+      return res.status(404).json({ message: "Book not found" });
     }
     res.json(book);
   } catch (err) {

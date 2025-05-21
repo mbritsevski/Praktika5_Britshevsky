@@ -39,7 +39,7 @@ useEffect(() => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Kustutada kommentaar?')) {
+    if (window.confirm('Delete comment?')) {
       try {
         await deleteComment(id);
         loadComments();
