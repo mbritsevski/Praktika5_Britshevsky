@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "mbrits",
+    "password": "t231792",
+    "database": "db_mbrits",
+    "host": "dev.vk.edu.ee",
+    "dialect": "postgres",
+    "schema": "books"
+  },
+  "test": {
+    "username": "mbrits",
+    "password": "t231792",
+    "database": "db_mbrits",
+    "host": "dev.vk.edu.ee",
+    "dialect": "postgres",
+        "schema": "books"
+  },
+  "production": {
+    "username": "mbrits",
+    "password": "t231792",
+    "database": "db_mbrits",
+    "host": "dev.vk.edu.ee",
+    "dialect": "postgres",
+    "schema": "books"
+  }
+}
