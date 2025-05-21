@@ -47,7 +47,7 @@ NB! Terminal ei pruugi alla tõmmata kõik moodulid seega tuleb neid manuaalselt
 looge schema "books" teie Postgre andmebaasis
 
 ```bash
-CREATE SCHEMA book;
+CREATE SCHEMA books;
 
 ```
 Järgmisena tuleb importeerida kõik raamatud andmebaasi
